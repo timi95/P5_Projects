@@ -14,7 +14,10 @@ function setup() {
   for(let i=0; i<3; i++){    
     movers.push(new Mover());    
   }
-  fish = new Fish();
+  fishes = []
+  for(let i=0; i<3; i++){
+      fishes.push(new Fish());
+  }
   liquid = new Liquid(0, height/2, width, height/2, 0.1);
   gravity = createVector(0,5);
   
@@ -57,8 +60,8 @@ function draw() {
 
       
 
-  // let force_of_attraction = attractor.attract(mover, gravity.mag());  
-  // mover.applyForce(force_of_attraction);
+//   let force_of_attraction = attractor.attract(mover, gravity.mag());  
+//   mover.applyForce(force_of_attraction);
     
   mover.applyForce(
             gravity.copy()
@@ -68,13 +71,21 @@ function draw() {
   mover.checkEdges();
   mover.display();
     
-    
+
+
   });
 
-  
-  fish.update();
-  fish.checkEdges();
-  fish.display();
+  fishes.forEach((fish,index)=>{
+    for(let i = 0; i <  fishes.length ; i++){
+        let hunger = fish.attract(movers[index],gravity.mag())
+        fish.applyForce(hunger);
+    } 
+    
+    fish.update();
+    fish.checkEdges();
+    fish.display();
+  });
+
   
   
   // testmag.setMag(-1);
