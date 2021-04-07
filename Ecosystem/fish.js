@@ -31,10 +31,11 @@ class Fish{
     this.location.x = width;
     }
     
-    if (this.location.y > height) {
-    this.location.y = 0;
-    } else if (this.location.y < height/2) {
-    this.location.y = constrain(this.location.y, (height/2)-5, height);
+    if (this.location.y > height-10) {
+        this.location.y = height-10;
+    } else 
+    if (this.location.y < height/2) {
+        this.location.y = (height/2)
     }
             
   }
@@ -60,6 +61,15 @@ class Fish{
     this.acceleration.add(localForce);
   }
 
+  attract(mover, G){
+    let force = p5.Vector.sub(this.location, mover.location);
+    let distance = force.mag();
+    distance = constrain(distance,5.0,25.0);
+    
+    let strength = (G * this.mass * mover.mass) / (distance * distance);
+    force.setMag(strength);
+    return force; 
+  }
   
   display(){
     stroke(255);
